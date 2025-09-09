@@ -8,55 +8,62 @@
                 <div>
                     <p><b>Pinia</b> es la librería oficial para gestión de estado en Vue 3. Permite compartir datos entre componentes de forma reactiva y sencilla.</p>
                     <q-banner class="bg-grey-2 q-mt-sm">
-                        <code>
-                            npm install pinia<br>
-                            // main.js<br>
-                            import { createPinia } from 'pinia'<br>
-                            app.use(createPinia())
+                        <code class="code-block">
+npm install pinia
+# En tu archivo main.js 
+import { createPinia } from 'pinia'
+const app = createApp(App)
+app.use(createPinia())
                         </code>
                     </q-banner>
                     <div class="q-mt-md">
                         <b>Ejemplo de store:</b>
                         <q-banner class="bg-grey-2 q-mt-sm">
-                            <code>
-                                import { defineStore } from 'pinia'<br>
-                                export const useMainStore = defineStore('main', {<br>
-                                    state: () => ({ contador: 0 }),<br>
-                                    actions: { incrementar() { this.contador++ } }<br>
-                                })
+                            <code class="code-block">
+import { defineStore } from 'pinia'
+export const useMainStore = defineStore('main', {
+    state: () => ({ contador: 0 }),
+    actions: { incrementar() { this.contador++ } }
+})
                             </code>
                         </q-banner>
                     </div>
                     <div class="q-mt-md">
                         <b>¿Cómo se usa Pinia en un componente?</b>
                         <q-banner class="bg-grey-2 q-mt-sm">
-                            <code>
-                                &lt;script setup&gt;<br>
-                                import { useMainStore } from '../stores/mainStore'<br>
-                                const store = useMainStore()<br>
-                                &lt;/script&gt;<br>
-                                &lt;template&gt;<br>
-                                &nbsp;&nbsp;&lt;p&gt;Contador: {{ store.contador }}&lt;/p&gt;<br>
-                                &nbsp;&nbsp;&lt;button @click="store.incrementar"&gt;Incrementar&lt;/button&gt;<br>
-                                &lt;/template&gt;
+                            <code class="code-block">
+&lt;script setup&gt;
+import { useMainStore } from '../stores/mainStore'
+const store = useMainStore()
+&lt;/script&gt;
+&lt;template&gt;
+  &lt;p&gt;Contador: {{ store.contador }}&lt;/p&gt;
+  &lt;button @click="store.incrementar"&gt;Incrementar&lt;/button&gt;
+&lt;/template&gt;
                             </code>
                         </q-banner>
                     </div>
                     <div class="q-mt-md">
-                        <b>Ventajas de Pinia:</b>
-                        <ul>
-                            <li>API sencilla y moderna.</li>
-                            <li>Soporte para TypeScript.</li>
-                            <li>Persistencia de estado con plugins.</li>
-                            <li>Devtools integrados.</li>
-                        </ul>
+                        <div class="text-h6 text-secondary q-mb-sm">Ventajas de Pinia</div>
+                        <q-list bordered separator class="rounded-borders">
+                            <q-item><q-item-section avatar><q-icon color="positive" name="check_circle" /></q-item-section><q-item-section>API sencilla y moderna.</q-item-section></q-item>
+                            <q-item><q-item-section avatar><q-icon color="positive" name="check_circle" /></q-item-section><q-item-section>Soporte para TypeScript.</q-item-section></q-item>
+                            <q-item><q-item-section avatar><q-icon color="positive" name="check_circle" /></q-item-section><q-item-section>Persistencia de estado con plugins.</q-item-section></q-item>
+                            <q-item><q-item-section avatar><q-icon color="positive" name="check_circle" /></q-item-section><q-item-section>Devtools integrados.</q-item-section></q-item>
+                        </q-list>
                     </div>
                     <div class="q-mt-md">
-                        <b>Recursos útiles:</b>
-                        <ul>
-                            <li><a href="https://pinia.vuejs.org/" target="_blank">Documentación oficial de Pinia</a></li>
-                            <li><a href="https://vuejs.org/guide/scaling-up/state-management.html" target="_blank">Guía de gestión de estado en Vue.js</a></li>
-                        </ul>
+                        <div class="text-h6 text-secondary q-mb-sm">Recursos útiles</div>
+                        <q-list bordered separator class="rounded-borders">
+                            <q-item clickable tag="a" href="https://pinia.vuejs.org/" target="_blank">
+                                <q-item-section avatar><q-icon color="primary" name="link" /></q-item-section>
+                                <q-item-section>Documentación oficial de Pinia</q-item-section>
+                            </q-item>
+                            <q-item clickable tag="a" href="https://vuejs.org/guide/scaling-up/state-management.html" target="_blank">
+                                <q-item-section avatar><q-icon color="primary" name="link" /></q-item-section>
+                                <q-item-section>Guía de gestión de estado en Vue.js</q-item-section>
+                            </q-item>
+                        </q-list>
                     </div>
                 </div>
             </q-card-section>
@@ -85,11 +92,21 @@
     background: #f5f5f5;
     color: #222;
 }
+.code-block {
+    white-space: pre-wrap;
+    word-break: break-word;
+    display: block;
+    background: transparent;
+}
 code {
     white-space: pre-wrap;
     word-break: break-word;
     background: #e3e3e3;
     padding: 2px 6px;
     border-radius: 4px;
+}
+.q-banner .code-block {
+    background: transparent;
+    padding: 0;
 }
 </style>
