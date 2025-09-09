@@ -1,198 +1,232 @@
 <template>
-    <div class="contenedor">
-
-        <h1 class="text-red-10 text-weight-bold text-center"> ¿Qué es Vue?</h1>
-
-        <div class="parrafo cursive-moderna">
-            <h2 class=" cursive-elegante text-red-10">Descripción:</h2>
-            <p>Vue.js es un framework progresivo para construir interfaces de usuario. Es progresivo porque puedes
-                adoptarlo gradualmente: desde integrarlo en una página HTML simple hasta desarrollar aplicaciones de una
-                sola página (SPA) complejas.</p>
+  <q-page class="q-pa-md">
+    <q-card class="my-card">
+      <q-card-section>
+        <div class="text-h4 text-primary text-center">Ciclo de Vida en Vue.js</div>
+        <div class="text-subtitle2 q-mt-xs text-center text-grey-7">
+          ¿Qué es el ciclo de vida?
         </div>
-
-        <div class="caracteristicas">
-            <h3 class="text-blue-4">Características clave:</h3>
-            <ul>
-                <li><strong>Reactividad:</strong> Los cambios en los datos se reflejan automáticamente en la interfaz.</li>
-                <li><strong>Componentes reutilizables:</strong> Permite encapsular UI y lógica en bloques independientes.</li>
-                <li><strong>Sintaxis declarativa:</strong> Usa templates basados en HTML con directivas.</li>
-                <li><strong>Integración flexible:</strong> Puede coexistir con otras librerías o usarse como base de una SPA completa.</li>
-            </ul>
+        <q-separator class="q-my-sm" />
+        <div>
+          En Vue, cada componente pasa por una serie de etapas desde que se crea,
+          se monta en el DOM, se actualiza cuando cambian sus datos, y finalmente
+          se destruye.<br />
+          A estos pasos se les llama <b>ciclo de vida</b> y Vue nos da
+          <b>hooks</b> (ganchos) para ejecutar código en cada momento.
         </div>
+      </q-card-section>
 
-        <div class="ecosistema">
-            <h3 class="text-green-4">Ecosistema de Vue:</h3>
-            <ul>
-                <li><strong>Vue Router:</strong> Para la gestión de rutas en SPAs.</li>
-                <li><strong>Pinia:</strong> Para la gestión de estado centralizado (sucesor de Vuex).</li>
-                <li><strong>Vite:</strong> Herramienta de desarrollo moderna y ultrarrápida.</li>
-                <li><strong>Vue Devtools:</strong> Extensión de navegador para depurar aplicaciones Vue.</li>
-            </ul>
-        </div>
-
-        <div class="ejemplo-codigo">
-            <h3 class="text-orange-4">Ejemplo Práctico: Contador</h3>
-            <div class="codigo-bloque">
-                <p>Contador: {{ count }}</p>
-                <button @click="increment">Incrementar</button>
+      <q-card-section>
+        <div class="text-h5 text-secondary q-mb-md">Etapas principales</div>
+        <q-timeline color="primary">
+          <q-timeline-entry
+            title="Creación (Creation)"
+            subtitle="Preparación de datos"
+            icon="settings"
+          >
+            <div>
+              El componente prepara sus datos (<code>data</code>, <code>props</code>, <code>methods</code>).<br />
+              <b>Aún no aparece en pantalla (DOM).</b>
+              <ul>
+                <li><b>beforeCreate</b> → No se puede acceder a data ni methods.</li>
+                <li><b>created</b> → Ya existen data y methods, pero aún no hay acceso al DOM.</li>
+              </ul>
             </div>
-            <p>Este simple contador demuestra la reactividad de Vue. Al hacer clic en el botón, la variable <code>count</code> se actualiza y la vista se renderiza de nuevo automáticamente.</p>
-        </div>
-
-        <div class="ventajas">
-            <h3 class="text-purple-4">¿Por qué elegir Vue?</h3>
-            <ul>
-                <li><strong>Curva de aprendizaje suave:</strong> Ideal para principiantes gracias a su sintaxis clara y excelente documentación.</li>
-                <li><strong>Rendimiento optimizado:</strong> Su DOM virtual y sistema de reactividad lo hacen muy eficiente.</li>
-                <li><strong>Comunidad activa:</strong> Un gran ecosistema de librerías y soporte de la comunidad.</li>
-                <li><strong>Excelente documentación:</strong> Considerada una de las mejores en el mundo del desarrollo web.</li>
-            </ul>
-        </div>
-
-        <div class="comparacion">
-            <h3 class="text-teal-4">Vue 2 vs Vue 3</h3>
-            <p>Vue 3 trajo mejoras significativas sobre Vue 2:</p>
-            <ul>
-                <li><strong>Composition API:</strong> Una nueva forma de organizar la lógica de los componentes, más escalable.</li>
-                <li><strong>Mejor rendimiento:</strong> Reescritura del DOM virtual para ser más rápido y ligero.</li>
-                <li><strong>Teleport y Fragments:</strong> Más flexibilidad para renderizar componentes.</li>
-                <li><strong>Mejor soporte para TypeScript.</strong></li>
-            </ul>
-        </div>
-
-        <div class="ejemplo-codigo-2">
-            <h3 class="text-cyan-4">Otro Ejemplo: Two-Way Data Binding</h3>
-            <div class="codigo-bloque">
-                <input v-model="message" placeholder="Escribe algo aquí">
-                <p>El mensaje es: {{ message }}</p>
+          </q-timeline-entry>
+          <q-timeline-entry
+            title="Montaje (Mounting)"
+            subtitle="Inserción en el DOM"
+            icon="publish"
+          >
+            <div>
+              El componente se inserta en el DOM real.<br />
+              Aquí ya puedes manipular elementos con <code>refs</code>.
+              <ul>
+                <li><b>beforeMount</b> → Antes de montar el DOM.</li>
+                <li><b>mounted</b> → El componente ya está en el DOM.</li>
+              </ul>
             </div>
-            <p>Con la directiva <code>v-model</code>, Vue crea un enlace bidireccional entre el input y la variable <code>message</code>.</p>
-        </div>
+          </q-timeline-entry>
+          <q-timeline-entry
+            title="Actualización (Updating)"
+            subtitle="Cambios en datos"
+            icon="autorenew"
+          >
+            <div>
+              Se ejecuta cada vez que cambian datos (<code>data</code>, <code>props</code>).
+              <ul>
+                <li><b>beforeUpdate</b> → Antes de que Vue actualice el DOM.</li>
+                <li><b>updated</b> → Después de que el DOM se actualizó.</li>
+              </ul>
+            </div>
+          </q-timeline-entry>
+          <q-timeline-entry
+            title="Destrucción (Unmounting)"
+            subtitle="Eliminación del componente"
+            icon="delete"
+          >
+            <div>
+              El componente se elimina del DOM.<br />
+              Aquí limpias timers, sockets o eventos.
+              <ul>
+                <li><b>beforeUnmount</b> → Justo antes de destruir el componente.</li>
+                <li><b>unmounted</b> → El componente ya fue eliminado.</li>
+              </ul>
+              <div class="text-caption">
+                En Vue 2: <code>beforeDestroy</code> y <code>destroyed</code>.
+              </div>
+            </div>
+          </q-timeline-entry>
+        </q-timeline>
+      </q-card-section>
 
-    </div>
+      <q-card-section>
+        <div class="text-h6 text-accent q-mb-sm">Hooks en Options API</div>
+        <q-list bordered class="custom-list">
+          <q-item v-for="hook in optionsApiHooks" :key="hook.name" clickable>
+            <q-item-section>
+              <b>{{ hook.name }}</b>: {{ hook.desc }}
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h6 text-accent q-mb-sm">Hooks en Composition API (Vue 3)</div>
+        <q-list bordered class="custom-list">
+          <q-item v-for="hook in compositionApiHooks" :key="hook.name" clickable>
+            <q-item-section>
+              <b>{{ hook.name }}</b>: {{ hook.desc }}
+            </q-item-section>
+          </q-item>
+        </q-list>
+        <div class="q-mt-sm text-caption">
+          <b>Nota:</b> no existen <code>beforeCreate</code> ni <code>created</code>, porque la lógica inicial se ejecuta directamente en <code>setup()</code>.
+        </div>
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h6 text-accent q-mb-sm">Comparación con la vida real</div>
+        <q-table
+          :rows="lifeComparison"
+          :columns="lifeColumns"
+          dense
+          flat
+          hide-bottom
+          class="custom-table"
+        />
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h6 text-accent q-mb-sm">Diagrama del ciclo de vida (Vue 3)</div>
+        <q-img
+          src="https://vuejs.org/assets/lifecycle.16e4c08e.png"
+          alt="Diagrama ciclo de vida Vue 3"
+          style="max-width: 500px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.2);"
+        />
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h6 text-accent q-mb-sm">Buenas prácticas</div>
+        <q-list bordered class="custom-list">
+          <q-item v-for="(tip, i) in tips" :key="i">
+            <q-item-section>
+              <span v-html="tip"></span>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+    </q-card>
+  </q-page>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+const optionsApiHooks = [
+  { name: 'beforeCreate', desc: 'No hay data ni methods.' },
+  { name: 'created', desc: 'Ya puedes acceder a data y methods.' },
+  { name: 'beforeMount', desc: 'Antes de mostrar el DOM.' },
+  { name: 'mounted', desc: 'El componente ya está en el DOM.' },
+  { name: 'beforeUpdate', desc: 'Antes de actualizar el DOM.' },
+  { name: 'updated', desc: 'El DOM ya se actualizó.' },
+  { name: 'beforeUnmount', desc: 'Antes de destruir el componente.' },
+  { name: 'unmounted', desc: 'El componente ya fue destruido.' }
+];
 
-const count = ref(0);
-const message = ref('');
+const compositionApiHooks = [
+  { name: 'onBeforeMount', desc: 'Antes de montar el DOM.' },
+  { name: 'onMounted', desc: 'El componente ya está en el DOM.' },
+  { name: 'onBeforeUpdate', desc: 'Antes de actualizar el DOM.' },
+  { name: 'onUpdated', desc: 'El DOM ya se actualizó.' },
+  { name: 'onBeforeUnmount', desc: 'Antes de destruir el componente.' },
+  { name: 'onUnmounted', desc: 'El componente ya fue destruido.' }
+];
 
-function increment() {
-    count.value++;
-}
+const lifeColumns = [
+  { name: 'hook', label: 'Hook Vue', field: 'hook', align: 'left' },
+  { name: 'real', label: 'Vida Real', field: 'real', align: 'left' }
+];
+
+const lifeComparison = [
+  { hook: 'beforeCreate', real: 'Bebé en el vientre (no tiene identidad)' },
+  { hook: 'created', real: 'Bebé nace (ya tiene nombre, pero aún no está en casa)' },
+  { hook: 'beforeMount', real: 'Preparas la cuna antes de que llegue' },
+  { hook: 'mounted', real: 'El bebé ya está en casa' },
+  { hook: 'beforeUpdate', real: 'Niño a punto de cambiarse de ropa' },
+  { hook: 'updated', real: 'Niño con ropa nueva' },
+  { hook: 'beforeUnmount', real: 'Empacando para mudarse' },
+  { hook: 'unmounted', real: 'Persona ya se mudó, la habitación está vacía' }
+];
+
+const tips = [
+  '✔ Usa <b>created</b> para inicializar datos o llamar a APIs.',
+  '✔ Usa <b>mounted</b> para acceder a elementos del DOM o integrar librerías externas.',
+  '✔ Usa <b>beforeUnmount</b> para limpiar timers, sockets o eventos.',
+  '❌ Evita modificar datos dentro de <b>updated</b>, puede causar bucles infinitos.',
+  '❌ <b>beforeCreate</b> casi nunca se necesita.'
+];
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Parisienne&family=Playwrite+AU+SA:wght@300&display=swap');
-
-.contenedor {
-    max-width: 900px;
-    margin: 2rem auto;
-    padding: 2rem;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+.my-card {
+  max-width: 950px;
+  margin: 2rem auto;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  background: #fff;
+  padding: 1rem;
 }
 
-h1 {
-    margin-bottom: 2rem;
+/* Listas */
+.custom-list {
+  border-radius: 8px;
+  background: #fafafa;
+}
+.custom-list .q-item {
+  transition: background 0.2s;
+}
+.custom-list .q-item:hover {
+  background: #f0f0f0;
 }
 
-.cursive-elegante {
-    font-family: 'Dancing Script', cursive;
-    font-size: 50px;
-    font-weight: 700;
-    line-height: 1.4;
+/* Tabla */
+.custom-table {
+  border-radius: 8px;
+  overflow: hidden;
+  background: #fafafa;
+}
+.custom-table thead {
+  background: #e3f2fd;
+  font-weight: bold;
+}
+.custom-table td {
+  font-size: 15px;
 }
 
-.cursive-moderna {
-    font-family: 'Playwrite AU SA', cursive;
-    font-size: 22px;
-    font-weight: 300;
-    line-height: 1.6;
-    margin-bottom: 2rem;
+/* Textos */
+.text-subtitle2 {
+  font-size: 18px;
 }
-
-.caracteristicas, .ecosistema, .ejemplo-codigo, .ventajas, .comparacion, .ejemplo-codigo-2 {
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background-color: #fff;
-    border-left: 5px solid;
-    border-radius: 5px;
-}
-
-.caracteristicas { border-color: #2196F3; } /* Blue */
-.ecosistema { border-color: #4CAF50; } /* Green */
-.ejemplo-codigo { border-color: #FF9800; } /* Orange */
-.ventajas { border-color: #9C27B0; } /* Purple */
-.comparacion { border-color: #009688; } /* Teal */
-.ejemplo-codigo-2 { border-color: #00BCD4; } /* Cyan */
-
-
-h3 {
-    margin-top: 0;
-    font-size: 28px;
-    font-family: 'Playwrite AU SA', cursive;
-}
-
-ul {
-    padding-left: 20px;
-    list-style-type: disc;
-}
-
-.comparacion ul {
-    list-style-type: circle;
-}
-
-li {
-    margin-bottom: 0.5rem;
-    font-size: 18px;
-}
-
-.codigo-bloque {
-    background-color: #2d2d2d;
-    color: #f1f1f1;
-    padding: 1rem;
-    border-radius: 5px;
-    margin-bottom: 1rem;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin-top: 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;    
-}     
-
-code {
-    background-color: #eee;
-    padding: 2px 4px;
-    border-radius: 3px;
-    font-family: 'Courier New', Courier, monospace;
-}
-
-input {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border-radius: 4px;
-    border: 1px solid #ccc;
-    font-family: 'Playwrite AU SA', cursive;
-    box-sizing: border-box; /* To prevent padding from affecting width */
-    font-size: 16px;
+.text-h4 {
+  font-weight: 700;
 }
 </style>

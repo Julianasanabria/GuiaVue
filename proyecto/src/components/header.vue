@@ -108,7 +108,7 @@ const menuList = [
   {
     label: 'Vue router',
     separator: true,
-    to: '/ VueRouterView'
+    to: '/VueRouterView'
   },
   {
     label: 'Pinia',
