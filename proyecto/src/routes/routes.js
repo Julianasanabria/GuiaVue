@@ -21,7 +21,7 @@ const routes = [
    {path: "/RequisitosView", component:RequisitosView},
    {path: "/CreacionProyectoView", component:CreacionProyectoView},
    {path: "/InterpolacionView", component:InterpolacionView},
-   {path: "/DirectivasView", component:DirectivasView},
+   {path: "/DirectivasView", component:DirectivasView}, 
    {path: "/OptionsApiView", component:OptionsApiView},
    {path: "/CompositionApiView", component:CompositionApiView},
    {path: "/CicloVidaView", component:CicloVidaView},
