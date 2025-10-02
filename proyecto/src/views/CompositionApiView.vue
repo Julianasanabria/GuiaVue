@@ -33,14 +33,7 @@
               <p class="q-mt-sm">
                 <code>ref()</code> toma un valor interno y devuelve un objeto de referencia reactivo y mutable. Este objeto tiene una única propiedad <code>.value</code> que apunta al valor interno. Es la forma más común de declarar estado reactivo para valores primitivos (strings, números, booleanos).
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>import { ref } from 'vue'
-
-const contador = ref(0)
-
-function incrementar() {
-  // Para acceder o modificar el valor, se usa .value
-  contador.value++
-}</code></div>
+              <CodeBlock :code="code.ref" class="q-mt-sm" />
             </q-item-section>
           </q-item>
 
@@ -52,12 +45,7 @@ function incrementar() {
               <p class="q-mt-sm">
                 Una propiedad computada rastrea sus dependencias reactivas y se recalcula automáticamente solo cuando estas cambian. Son muy eficientes porque su valor se guarda en caché.
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>import { ref, computed } from 'vue'
-
-const contador = ref(1)
-const doble = computed(() => contador.value * 2) // Se actualiza si 'contador' cambia
-
-console.log(doble.value) // 2</code></div>
+              <CodeBlock :code="code.computed" class="q-mt-sm" />
             </q-item-section>
           </q-item>
 
@@ -69,13 +57,7 @@ console.log(doble.value) // 2</code></div>
               <p class="q-mt-sm">
                 Es útil para realizar acciones en respuesta a cambios de datos, como llamadas a una API, o para lógica más compleja que no puede ser expresada con una propiedad computada.
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>import { ref, watch } from 'vue'
-
-const pregunta = ref('')
-
-watch(pregunta, (nuevaPregunta, viejaPregunta) => {
-  console.log(`La pregunta ha cambiado de "${viejaPregunta}" a "${nuevaPregunta}"`)
-})</code></div>
+              <CodeBlock :code="code.watch" class="q-mt-sm" />
             </q-item-section>
           </q-item>
 
@@ -87,11 +69,7 @@ watch(pregunta, (nuevaPregunta, viejaPregunta) => {
               <p class="q-mt-sm">
                 Podemos registrar callbacks para ser ejecutados en diferentes momentos del ciclo de vida. Por ejemplo, <code>onMounted</code> se ejecuta después de que el componente ha sido insertado en el DOM.
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>import { onMounted } from 'vue'
-
-onMounted(() => {
-  console.log('El componente ha sido montado.')
-})</code></div>
+              <CodeBlock :code="code.hooks" class="q-mt-sm" />
             </q-item-section>
           </q-item>
         </q-list>
@@ -116,38 +94,49 @@ onMounted(() => {
         </q-card>
 
         <div class="text-h6 q-mt-lg">Código del Ejemplo</div>
-        <div class="code-block-container q-mt-sm" v-pre><code>&lt;template&gt;
-  &lt;q-input filled v-model="nombre" label="Tu Nombre" /&gt;
-  &lt;p&gt;&lt;b&gt;Número de caracteres (computado):&lt;/b&gt; {{ longitudNombre }}&lt;/p&gt;
-  &lt;q-btn @click="limpiarNombre"&gt;Limpiar Nombre&lt;/q-btn&gt;
-&lt;/template&gt;
-
-&lt;script setup&gt;
-import { ref, computed } from 'vue'
-
-// Estado reactivo
-const nombre = ref('Mundo')
-
-// Valor computado que depende de 'nombre'
-const longitudNombre = computed(() => nombre.value.length)
-
-// Función que modifica el estado
-function limpiarNombre() {
-  nombre.value = ''
-}
-&lt;/script&gt;</code></div>
+        <CodeBlock :code="code.example" class="q-mt-sm" />
+        <div class="text-right q-mt-md">
+          <span class="text-caption text-grey-7">Desarrollado por Santiago Carvajal y Juliana Sanabria</span>
+        </div>
       </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, reactive } from 'vue';
+import CodeBlock from '../components/CodeBlock.vue';
 
-// Lógica para el ejemplo interactivo
+// Código para los ejemplos
+const code = reactive({
+  ref: `<span class="token-keyword">import</span> { ref } <span class="token-keyword">from</span> <span class="token-string">'vue'</span>
+<span class="token-comment">// Para usarlo, necesitas acceder a su propiedad .value en el script</span>
+<span class="token-keyword">const</span> contador = <span class="token-function">ref</span>(<span class="token-number">0</span>)
+console.<span class="token-function">log</span>(contador.value) <span class="token-comment">// 0</span>
+contador.value<span class="token-operator">++</span>`,
+  computed: `<span class="token-keyword">import</span> { ref, computed } <span class="token-keyword">from</span> <span class="token-string">'vue'</span>
+<span class="token-keyword">const</span> contador = <span class="token-function">ref</span>(<span class="token-number">1</span>)
+<span class="token-comment">// 'masUno' se actualiza automáticamente cuando 'contador' cambia</span>
+<span class="token-keyword">const</span> masUno = <span class="token-function">computed</span>(() => contador.value <span class="token-operator">+</span> <span class="token-number">1</span>)`,
+  watch: `<span class="token-keyword">import</span> { ref, watch } <span class="token-keyword">from</span> <span class="token-string">'vue'</span>
+<span class="token-keyword">const</span> pregunta = <span class="token-function">ref</span>(<span class="token-string">''</span>)
+<span class="token-function">watch</span>(pregunta, (nuevaPregunta, viejaPregunta) => {
+  console.<span class="token-function">log</span>(<span class="token-string">'La pregunta ha cambiado a:'</span>, nuevaPregunta)
+})`,
+  hooks: `<span class="token-keyword">import</span> { onMounted, onUnmounted } <span class="token-keyword">from</span> <span class="token-string">'vue'</span>
+<span class="token-function">onMounted</span>(() => {
+  console.<span class="token-function">log</span>(<span class="token-string">'El componente se ha montado en el DOM.'</span>)
+})`,
+  example: `<span class="token-keyword">import</span> { ref, computed } <span class="token-keyword">from</span> <span class="token-string">'vue'</span>
+<span class="token-keyword">const</span> nombre = <span class="token-function">ref</span>(<span class="token-string">'Mundo'</span>)
+<span class="token-keyword">const</span> longitudNombre = <span class="token-function">computed</span>(() => nombre.value.length)
+<span class="token-keyword">function</span> <span class="token-function">limpiarNombre</span>() {
+  nombre.value = <span class="token-string">''</span>
+}`
+});
+// Lógica del ejemplo interactivo
 const nombre = ref('Mundo')
 const longitudNombre = computed(() => nombre.value.length)
-
 function limpiarNombre() {
   nombre.value = ''
 }
@@ -160,40 +149,5 @@ function limpiarNombre() {
   border-radius: 12px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
   background: #fff;
-}
-
-/* Estilo para los bloques de código */
-.code-block-container {
-  font-size: 14px;
-  font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-  border-radius: 8px;
-  line-height: 1.7;
-  margin-bottom: 10px;
-  background: #f5f5f5;
-  color: #2c3e50;
-  padding: 1rem 1.2rem;
-  overflow-x: auto;
-}
-
-/* Estilo para el código inline */
-code {
-  background-color: #e3f2fd;
-  color: #1d4ed8;
-  padding: 0.2em 0.4em;
-  margin: 0 2px;
-  font-size: 85%;
-  border-radius: 6px;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-/* Anular el estilo inline para el código dentro de los bloques */
-.code-block-container code {
-  background: transparent;
-  color: inherit;
-  padding: 0;
-  margin: 0;
-  font-size: inherit;
-  border-radius: 0;
 }
 </style>

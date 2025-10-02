@@ -13,7 +13,7 @@
           donde defines la lógica del componente en propiedades separadas como <code>data</code>, <code>methods</code>,
           <code>computed</code>, <code>watch</code> y los hooks del ciclo de vida (<code>mounted</code>, <code>created</code>, etc.).
         </p>
-        <p class="text-body1">
+        <p class="text-body1 q-mt-md">
           Este enfoque es muy estructurado y fácil de seguir para principiantes, ya que cada pieza de lógica tiene su lugar designado.
         </p>
       </q-card-section>
@@ -28,14 +28,10 @@
               <q-item-label class="text-h6"><code>data()</code></q-item-label>
               <q-item-label caption>La memoria del componente.</q-item-label>
               <p class="q-mt-sm">
-                La función <code>data</code> debe devolver un objeto. Las propiedades de este objeto se vuelven reactivas y están disponibles en la plantilla y en otros métodos a través de <code>this</code>.
+                La propiedad <code>data</code> <b>debe ser una función</b> que devuelve un objeto. Vue llama a esta función para cada instancia del componente, asegurando que cada uno tenga su propio estado independiente y no compartan datos por accidente.
+                Las propiedades de este objeto se vuelven reactivas y están disponibles en la plantilla y en otros métodos a través de <code>this</code>.
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>data() {
-  return {
-    contador: 0,
-    mensaje: 'Hola Vue'
-  }
-}</code></div>
+              <CodeBlock :code="code.data" class="q-mt-sm" />
             </q-item-section>
           </q-item>
 
@@ -47,14 +43,7 @@
               <p class="q-mt-sm">
                 Aquí se definen las funciones que se pueden llamar desde la plantilla (por ejemplo, en un <code>@click</code>) o desde otras partes del componente. Tienen acceso a las propiedades de <code>data</code> a través de <code>this</code>.
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>methods: {
-  incrementar() {
-    this.contador++;
-  },
-  resetear() {
-    this.contador = 0;
-  }
-}</code></div>
+              <CodeBlock :code="code.methods" class="q-mt-sm" />
             </q-item-section>
           </q-item>
 
@@ -66,12 +55,10 @@
               <p class="q-mt-sm">
                 Las propiedades computadas son como propiedades de <code>data</code>, pero su valor se calcula a partir de otras propiedades. Vue las cachea y solo las recalcula cuando una de sus dependencias cambia, lo que las hace muy eficientes.
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>computed: {
-  doble() {
-    // Se actualiza automáticamente cuando 'contador' cambia
-    return this.contador * 2;
-  }
-}</code></div>
+              <p class="q-mt-sm">
+                <b>Diferencia con un método:</b> Podrías obtener el mismo resultado con un método, pero el método se ejecutaría <b>cada vez</b> que la plantilla se renderiza. Una propiedad computada solo se recalcula si sus dependencias (como <code>this.contador</code>) han cambiado. ¡Es mucho más inteligente!
+              </p>
+              <CodeBlock :code="code.computed" class="q-mt-sm" />
             </q-item-section>
           </q-item>
 
@@ -83,11 +70,7 @@
               <p class="q-mt-sm">
                 Permite ejecutar código en respuesta a cambios en una propiedad específica de <code>data</code> o <code>props</code>. Es útil para realizar operaciones asíncronas o costosas.
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>watch: {
-  contador(nuevoValor, valorAnterior) {
-    console.log(`El contador cambió de ${valorAnterior} a ${nuevoValor}`);
-  }
-}</code></div>
+              <CodeBlock :code="code.watch" class="q-mt-sm" />
             </q-item-section>
           </q-item>
 
@@ -99,13 +82,16 @@
               <p class="q-mt-sm">
                 Son funciones que Vue ejecuta automáticamente en momentos específicos, como cuando el componente es creado (<code>created</code>), insertado en el DOM (<code>mounted</code>), actualizado (<code>updated</code>) o destruido (<code>unmounted</code>).
               </p>
-              <div class="code-block-container q-mt-sm" v-pre><code>export default {
-  // ...
-  mounted() {
-    console.log('El componente ha sido montado en el DOM.');
-    // Ideal para interactuar con el DOM o iniciar librerías externas.
-  }
-}</code></div>
+              <div class="q-mt-sm">
+                <b>Orden común del ciclo de vida:</b>
+                <ol>
+                  <li><code>created</code>: La instancia está creada. Puedes acceder a <code>data</code> y <code>methods</code>, pero el DOM aún no existe. Ideal para llamadas a APIs.</li>
+                  <li><code>mounted</code>: El componente ha sido insertado en el DOM. Ahora puedes interactuar con los elementos HTML.</li>
+                  <li><code>updated</code>: Ocurre después de que un cambio en los datos haya causado una actualización del DOM.</li>
+                  <li><code>unmounted</code>: El componente está a punto de ser destruido. Ideal para limpiar timers o listeners.</li>
+                </ol>
+              </div>
+              <CodeBlock :code="code.hooks" class="q-mt-sm" />
             </q-item-section>
           </q-item>
         </q-list>
@@ -116,7 +102,7 @@
         <div class="text-h5 text-secondary q-mb-md">Ejemplo Interactivo</div>
         <q-card flat bordered>
           <q-card-section>
-            <p>Escribe en el campo de texto para ver cómo la propiedad computada reacciona al cambio.</p>
+            <p>Escribe en el campo de texto para ver cómo la propiedad computada <code>reversedMessage</code> reacciona al cambio de la propiedad <code>message</code> en <code>data</code>.</p>
             <q-input filled v-model="message" label="Mensaje" clearable />
             <div class="q-mt-md">
               <p><b>Mensaje original:</b> {{ message }}</p>
@@ -124,64 +110,94 @@
             </div>
           </q-card-section>
           <q-separator />
-          <q-card-actions>
+          <q-card-actions align="right">
             <q-btn flat color="primary" @click="clearMessage">Limpiar Mensaje</q-btn>
           </q-card-actions>
         </q-card>
 
         <div class="text-h6 q-mt-lg">Código del Ejemplo</div>
-        <div class="code-block-container q-mt-sm" v-pre><code>&lt;template&gt;
-  &lt;q-input filled v-model="message" label="Mensaje" /&gt;
-  &lt;p&gt;&lt;b&gt;Mensaje al revés (computado):&lt;/b&gt; {{ reversedMessage }}&lt;/p&gt;
-  &lt;q-btn @click="clearMessage"&gt;Limpiar Mensaje&lt;/q-btn&gt;
-&lt;/template&gt;
-
-&lt;script&gt;
-export default {
-  data() {
-    return {
-      message: 'Hola Vue!'
-    }
-  },
-  computed: {
-    reversedMessage() {
-      return this.message.split('').reverse().join('');
-    }
-  },
-  methods: {
-    clearMessage() {
-      this.message = '';
-    }
-  }
-}
-&lt;/script&gt;</code></div>
+        <CodeBlock :code="code.example" class="q-mt-sm" />
+        <div class="text-right q-mt-md">
+          <span class="text-caption text-grey-7">Desarrollado por Santiago Carvajal y Juliana Sanabria</span>
+        </div>
       </q-card-section>
     </q-card>
   </q-page>
 </template>
 
-<script>
-// Para demostrar la Options API, este componente está escrito con ella.
-export default {
-  name: 'OptionsApiView',
-  data() {
-    return {
-      message: 'Hola Vue!'
+<script setup>
+import { ref, computed, reactive } from 'vue';
+import CodeBlock from '../components/CodeBlock.vue';
+
+// Lógica para el ejemplo interactivo
+const message = ref('Hola Vue!');
+const reversedMessage = computed(() => message.value.split('').reverse().join(''));
+function clearMessage() {
+  message.value = '';
+}
+
+// Bloques de código con resaltado
+const code = reactive({
+  data: `<span class="token-function">data</span>() {
+  <span class="token-keyword">return</span> {
+    <span class="token-attr-name">contador</span>: <span class="token-number">0</span>,
+    <span class="token-attr-name">mensaje</span>: <span class="token-string">'Hola Vue'</span>
+  }
+}`,
+  methods: `<span class="token-attr-name">methods</span>: {
+  <span class="token-function">incrementar</span>() {
+    <span class="token-keyword">this</span>.contador<span class="token-operator">++</span>;
+  },
+  <span class="token-function">resetearContador</span>() {
+    <span class="token-keyword">this</span>.contador = <span class="token-number">0</span>;
+  }
+}`,
+  computed: `<span class="token-attr-name">computed</span>: {
+  <span class="token-function">contadorDoble</span>() {
+    <span class="token-comment">// Se actualiza automáticamente cuando 'contador' cambia</span>
+    <span class="token-keyword">return</span> <span class="token-keyword">this</span>.contador <span class="token-operator">*</span> <span class="token-number">2</span>;
+  },
+  <span class="token-function">mensajeAlReves</span>() {
+    <span class="token-comment">// Se actualiza automáticamente cuando 'mensaje' cambia</span>
+    <span class="token-keyword">return</span> <span class="token-keyword">this</span>.mensaje.<span class="token-function">split</span>(<span class="token-string">''</span>).<span class="token-function">reverse</span>().<span class="token-function">join</span>(<span class="token-string">''</span>);
+  }
+}`,
+  watch: `<span class="token-attr-name">watch</span>: {
+  <span class="token-function">contador</span>(nuevoValor, valorAnterior) {
+    <span class="token-keyword">if</span> (nuevoValor <span class="token-operator">></span> <span class="token-number">10</span>) {
+      console.<span class="token-function">log</span>(<span class="token-string">\`¡Cuidado! El contador (\${nuevoValor}) ha superado 10.\`</span>);
     }
   },
-  computed: {
-    // Una propiedad computada que depende de 'message'
-    reversedMessage() {
-      return this.message.split('').reverse().join('')
-    }
+  <span class="token-comment">// Para observar cambios profundos en un objeto</span>
+  <span class="token-string">'objeto.propiedad'</span>: {
+    <span class="token-function">handler</span>(nuevoValor) { <span class="token-comment">/* ... */</span> },
+    <span class="token-attr-name">deep</span>: <span class="token-boolean">true</span> <span class="token-comment">// Necesario para observar propiedades anidadas</span>
+  }
+}`,
+  hooks: `<span class="token-keyword">export default</span> {
+  <span class="token-comment">// ...</span>
+  <span class="token-function">mounted</span>() {
+    console.<span class="token-function">log</span>(<span class="token-string">'El componente ha sido montado en el DOM.'</span>);
+    <span class="token-comment">// Ideal para interactuar con el DOM o iniciar librerías externas.</span>
+  }
+}`,
+  example: `<span class="token-comment">&lt;!-- Template --&gt;</span>
+<span class="token-punctuation">&lt;</span><span class="token-tag">q-input</span> <span class="token-attr-name">filled</span> <span class="token-attr-name">v-model</span><span class="token-punctuation">=</span><span class="token-attr-value">"message"</span> <span class="token-attr-name">label</span><span class="token-punctuation">=</span><span class="token-attr-value">"Mensaje"</span> <span class="token-punctuation">/&gt;</span>
+<span class="token-punctuation">&lt;</span><span class="token-tag">p</span><span class="token-punctuation">&gt;</span>Mensaje al revés: {{ reversedMessage }}<span class="token-punctuation">&lt;/</span><span class="token-tag">p</span><span class="token-punctuation">&gt;</span>
+
+<span class="token-comment">&lt;!-- Script --&gt;</span>
+<span class="token-keyword">export default</span> {
+  <span class="token-function">data</span>() {
+    <span class="token-keyword">return</span> { <span class="token-attr-name">message</span>: <span class="token-string">'Hola Vue!'</span> }
   },
-  methods: {
-    // Un método para modificar el estado
-    clearMessage() {
-      this.message = ''
+  <span class="token-attr-name">computed</span>: {
+    <span class="token-function">reversedMessage</span>() {
+      <span class="token-keyword">return</span> <span class="token-keyword">this</span>.message.<span class="token-function">split</span>(<span class="token-string">''</span>).<span class="token-function">reverse</span>().<span class="token-function">join</span>(<span class="token-string">''</span>);
     }
   }
-}
+}`
+});
+
 </script>
 
 <style scoped>
@@ -193,40 +209,16 @@ export default {
   background: #fff;
 }
 
-/* Estilo para los bloques de código */
-.code-block-container {
-  font-size: 14px;
-  font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-  border-radius: 8px;
-  line-height: 1.7;
-  margin-bottom: 10px;
-  background: #f5f5f5;
-  color: #2c3e50;
-  padding: 1rem 1.2rem;
-  overflow-x: auto;
-}
-
 /* Estilo para el código inline */
 code {
-  background-color: #e3f2fd;
-  color: #1d4ed8;
+  background-color: #2a2a2a;
+  color: #e3e3e3;
   padding: 0.2em 0.4em;
   margin: 0 2px;
   font-size: 85%;
   border-radius: 6px;
   white-space: pre-wrap;
   word-break: break-word;
-
-}
-
-/* Anular el estilo inline para el código dentro de los bloques */
-.code-block-container code {
-  background: transparent;
-  color: inherit;
-  padding: 0;
-  margin: 0;
-  font-size: inherit;
-  border-radius: 0;
 }
 
 </style>

@@ -135,6 +135,11 @@
             </q-item-section>
           </q-item>
         </q-list>
+        <q-card-section class="text-right">
+        <span class="text-caption text-grey-7">
+          Desarrollado por Santiago Carvajal y Juliana Sanabria
+        </span>
+      </q-card-section>
       </q-card-section>
     </q-card>
   </q-page>

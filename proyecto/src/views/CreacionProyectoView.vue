@@ -25,23 +25,9 @@
               <q-card-section>
                 <div class="text-h6">Opción 1: Vía CDN <q-badge align="top" color="info" label="Para prototipos" /></div>
                 <p class="q-mt-sm">
-                  Ideal para pruebas rápidas, ejemplos en CodePen/JSFiddle o para añadir Vue a una página HTML existente sin un proceso de "build".
+                  Ideal para pruebas rápidas, ejemplos en CodePen/JSFiddle o para añadir un poco de interactividad a una página HTML existente sin un proceso de "build" (compilación). Simplemente añades una etiqueta <code>&lt;script&gt;</code> y ¡listo!
                 </p>
-                <q-banner dense class="bg-grey-2 q-mt-sm">
-                  <template v-slot:avatar><q-icon name="cloud_queue" color="primary" /></template>
-                  <code class="code-block">
-&lt;!-- 1. Incluye el script de Vue --&gt;
-&lt;script src="https://unpkg.com/vue@3"&gt;&lt;/script&gt;
-
-&lt;!-- 2. Define el contenedor de tu app --&gt;
-&lt;div id="app"&gt;{{ mensaje }}&lt;/div&gt;<br>
-
-&lt;!-- 3. Crea y monta la instancia de Vue --&gt;
-&lt;script&gt;
-Vue.createApp({ data(){ return { mensaje: 'Hola Vue' } } }).mount('#app')<br>
-&lt;/script&gt;
-                  </code>
-                </q-banner>
+                <CodeBlock :code="code.cdn" class="q-mt-sm" />
                 <div class="row q-mt-md q-col-gutter-sm">
                   <div class="col-12 col-sm-6"><b>Ventajas:</b> Cero configuración, portabilidad, ideal para demos.</div>
                   <div class="col-12 col-sm-6"><b>Desventajas:</b> Sin soporte para Single-File Components (.vue), no hay optimización de build, difícil de escalar.</div>
@@ -56,22 +42,9 @@ Vue.createApp({ data(){ return { mensaje: 'Hola Vue' } } }).mount('#app')<br>
               <q-card-section>
                 <div class="text-h6">Opción 2: Con Vue CLI <q-badge align="top" color="orange" label="Legado" /></div>
                 <p class="q-mt-sm">
-                  La herramienta clásica basada en Webpack. Sigue siendo muy potente y es la opción a seguir si necesitas mantener un proyecto antiguo o requieres una configuración muy específica de Webpack.
+                  La herramienta clásica, basada en <b>Webpack</b> (un potente empaquetador de módulos). Sigue siendo muy robusta y es la opción a seguir si necesitas mantener un proyecto antiguo o requieres una configuración muy específica de Webpack.
                 </p>
-                <q-banner dense class="bg-grey-2 q-mt-sm">
-                  <template v-slot:avatar><q-icon name="build_circle" color="secondary" /></template>
-                  <code class="code-block">
-# 1. Instalar Vue CLI globalmente (solo una vez)
-npm install -g @vue/cli
-
-# 2. Crear el proyecto (te guiará con preguntas)
-vue create mi-proyecto-vue
-
-# 3. Navegar al directorio y arrancar el servidor
-cd mi-proyecto-vue
-npm run serve
-                  </code>
-                </q-banner>
+                <CodeBlock :code="code.vueCli" class="q-mt-sm" />
                 <div class="row q-mt-md q-col-gutter-sm">
                   <div class="col-12 col-sm-6"><b>Ventajas:</b> Ecosistema maduro, altamente configurable, muchos plugins.</div>
                   <div class="col-12 col-sm-6"><b>Desventajas:</b> Servidor de desarrollo y builds más lentos que Vite.</div>
@@ -86,20 +59,9 @@ npm run serve
               <q-card-section>
                 <div class="text-h6">Opción 3: Con Vite <q-badge align="top" color="positive" label="Recomendado" /></div>
                 <p class="q-mt-sm">
-                  La opción moderna y oficial para Vue 3. Vite utiliza módulos ES nativos del navegador para ofrecer un servidor de desarrollo ultrarrápido y una experiencia de configuración mínima.
+                  La opción moderna y recomendada por el equipo de Vue. Vite (que en francés significa "rápido") utiliza los módulos ES nativos del navegador para ofrecer un servidor de desarrollo <b>ultrarrápido</b>. Los cambios en tu código se reflejan en el navegador casi instantáneamente.
                 </p>
-                <q-banner dense class="bg-grey-2 q-mt-sm">
-                  <template v-slot:avatar><q-icon name="bolt" color="accent" /></template>
-                  <code class="code-block">
-# 1. Ejecuta el comando de creación (sin instalación global)
-npm create vite@latest mi-proyecto-vite -- --template vue
-
-# 2. Navega, instala dependencias y arranca el servidor
-cd mi-proyecto-vite
-npm install
-npm run dev
-                  </code>
-                </q-banner>
+                <CodeBlock :code="code.vite" class="q-mt-sm" />
                 <div class="row q-mt-md q-col-gutter-sm">
                   <div class="col-12 col-sm-6"><b>Ventajas:</b> Arranque casi instantáneo, HMR (Hot Module Replacement) rapidísimo, configuración sencilla, optimizado para tecnologías modernas.</div>
                   <div class="col-12 col-sm-6"><b>Desventajas:</b> El ecosistema de plugins es más nuevo que el de Webpack.</div>
@@ -128,6 +90,12 @@ npm run dev
               <td>N/A</td>
               <td>Lenta (empaqueta todo al inicio)</td>
               <td><b class="text-positive">Muy Rápida</b> (sirve archivos bajo demanda)</td>
+            </tr>
+            <tr>
+              <td>Velocidad Build</td>
+              <td>N/A</td>
+              <td>Lenta (empaqueta todo)</td>
+              <td><b class="text-positive">Rápida</b> (usa Rollup, muy optimizado)</td>
             </tr>
             <tr>
               <td>Soporte .vue (SFC)</td>
@@ -195,14 +163,39 @@ npm run dev
             <q-item-section>Documentación de Vue CLI</q-item-section>
           </q-item>
         </q-list>
+        <q-card-section class="text-right">
+        <span class="text-caption text-grey-7">
+          Desarrollado por Santiago Carvajal y Juliana Sanabria
+        </span>
+      </q-card-section>
       </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script setup>
-// Este archivo es solo para documentación visual, no requiere lógica extra.
-// No se requiere lógica de script para esta vista de documentación.
+import { reactive } from 'vue';
+import CodeBlock from '../components/CodeBlock.vue';
+
+const code = reactive({
+  cdn: `<span class="token-comment">&lt;!-- 1. Incluye el script de Vue --&gt;</span>
+<span class="token-punctuation">&lt;</span><span class="token-tag">script</span> <span class="token-attr-name">src</span><span class="token-punctuation">=</span><span class="token-attr-value">"https://unpkg.com/vue@3"</span><span class="token-punctuation">&gt;</span><span class="token-punctuation">&lt;/</span><span class="token-tag">script</span><span class="token-punctuation">&gt;</span>
+
+<span class="token-comment">&lt;!-- 2. Define el contenedor de tu app --&gt;</span>
+<span class="token-punctuation">&lt;</span><span class="token-tag">div</span> <span class="token-attr-name">id</span><span class="token-punctuation">=</span><span class="token-attr-value">"app"</span><span class="token-punctuation">&gt;</span>{{ mensaje }}<span class="token-punctuation">&lt;/</span><span class="token-tag">div</span><span class="token-punctuation">&gt;</span>
+
+<span class="token-comment">&lt;!-- 3. Crea y monta la instancia de Vue --&gt;</span>
+<span class="token-punctuation">&lt;</span><span class="token-tag">script</span><span class="token-punctuation">&gt;</span>
+  Vue.<span class="token-function">createApp</span>({ <span class="token-function">data</span>(){ <span class="token-keyword">return</span> { <span class="token-attr-name">mensaje</span>: <span class="token-string">'Hola Vue'</span> } } }).<span class="token-function">mount</span>(<span class="token-string">'#app'</span>)
+<span class="token-punctuation">&lt;/</span><span class="token-tag">script</span><span class="token-punctuation">&gt;</span>`,
+  vueCli: `<span class="token-comment"># 1. Instalar Vue CLI globalmente (solo una vez)</span>
+<span class="token-keyword">npm</span> <span class="token-function">install</span> -g @vue/cli
+
+<span class="token-comment"># 2. Crear el proyecto (te guiará con preguntas)</span>
+<span class="token-keyword">vue</span> <span class="token-function">create</span> mi-proyecto-vue`,
+  vite: `<span class="token-comment"># 1. Ejecuta el comando de creación (sin instalación global)</span>
+<span class="token-keyword">npm</span> <span class="token-function">create</span> vite@latest mi-proyecto-vite -- --template vue`
+});
 </script>
 
 <style scoped>
@@ -212,22 +205,5 @@ npm run dev
   border-radius: 14px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.1);
   background: #fff;
-}
-.q-banner {
-  border-radius: 6px;
-  background: #f5f5f5;
-  color: #222;
-}
-code {
-  font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-  padding: 2px 6px;
-  border-radius: 4px;
-  background-color: #e3e3e3;
-}
-.code-block {
-  white-space: pre-wrap;
-  word-break: break-word;
-  display: block;
-  background: transparent;
 }
 </style>

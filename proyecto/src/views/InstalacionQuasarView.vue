@@ -1,4 +1,3 @@
-
 <template>
     <q-page class="q-pa-md">
         <q-card class="my-card">
@@ -25,7 +24,7 @@
                         <q-item-section>
                             <q-item-label class="text-weight-bold">Ejecuta el comando de creación</q-item-label>
                             <q-item-label caption>Este comando iniciará un asistente interactivo en tu terminal.</q-item-label>
-                            <q-banner class="bg-grey-2 q-mt-sm"><code class="code-block">npm init quasar</code></q-banner>
+                            <CodeBlock :code="code.init" class="q-mt-sm" />
                         </q-item-section>
                     </q-item>
                     <q-item>
@@ -33,15 +32,13 @@
                         <q-item-section>
                             <q-item-label class="text-weight-bold">Sigue el asistente interactivo</q-item-label>
                             <q-item-label caption>Quasar te preguntará sobre tu proyecto: nombre, pre-procesador CSS (Sass/SCSS), si quieres incluir ESLint, Pinia, Axios, etc. ¡Puedes configurar casi todo desde el inicio!</q-item-label>
-                        </q-item-section>
+                            <q-item-label caption class="q-mt-sm text-primary">No tengas miedo de experimentar. Puedes elegir las opciones por defecto y siempre podrás añadir o quitar funcionalidades más tarde.</q-item-label></q-item-section>
                     </q-item>
                     <q-item>
                         <q-item-section avatar><q-icon name="looks_3" color="primary" /></q-item-section>
                         <q-item-section>
                             <q-item-label class="text-weight-bold">Navega y arranca el servidor de desarrollo</q-item-label>
-                            <q-banner class="bg-grey-2 q-mt-sm"><code class="code-block"># Reemplaza "mi-app-quasar" con el nombre que elegiste
-cd mi-app-quasar
-quasar dev</code></q-banner>
+                            <CodeBlock :code="code.dev" class="q-mt-sm" />
                         </q-item-section>
                     </q-item>
                 </q-list>
@@ -57,17 +54,14 @@ quasar dev</code></q-banner>
             <!-- Opción 2: Proyecto Existente -->
             <q-card-section>
                 <div class="text-h5 text-secondary q-mb-md">Opción 2: Añadir a un Proyecto Vue Existente (Vite) <q-badge color="orange" label="Avanzado" /></div>
-                <p>Si ya tienes un proyecto creado con Vite y no quieres empezar de cero, puedes añadir Quasar manualmente usando su plugin oficial. Este método requiere más configuración manual.</p>
+                <p>Si ya tienes un proyecto creado con Vite (usando <code>npm create vite@latest</code>) y no quieres empezar de cero, puedes añadir Quasar manually usando su plugin oficial. Este método requiere más configuración manual y <b>pierdes las herramientas de build del Quasar CLI</b> para exportar a móvil o escritorio.</p>
                 <div class="text-h6 q-mt-lg">Paso a Paso</div>
                 <q-list bordered separator class="rounded-borders">
                     <q-item>
                         <q-item-section avatar><q-icon name="looks_one" color="secondary" /></q-item-section>
                         <q-item-section>
                             <q-item-label class="text-weight-bold">Instala las dependencias necesarias</q-item-label>
-                            <q-banner class="bg-grey-2 q-mt-sm"><code class="code-block"># Instala Quasar y su plugin para Vite
-npm install quasar @quasar/extras
-# Sass es el pre-procesador recomendado por Quasar
-npm install -D sass vite-plugin-quasar</code></q-banner>
+                            <CodeBlock :code="code.deps" class="q-mt-sm" />
                         </q-item-section>
                     </q-item>
                     <q-item>
@@ -75,22 +69,7 @@ npm install -D sass vite-plugin-quasar</code></q-banner>
                         <q-item-section>
                             <q-item-label class="text-weight-bold">Configura <code>vite.config.js</code></q-item-label>
                             <q-item-label caption>Importa y añade el plugin de Quasar a tu configuración de Vite. Esto es crucial para que Vite entienda los componentes de Quasar y aplique el tree-shaking.</q-item-label>
-                            <q-banner class="bg-grey-2 q-mt-sm"><code class="code-block" v-pre>// vite.config.js
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import { quasar, transformAssetUrls } from '@quasar/vite-plugin'
-
-export default defineConfig({
-  plugins: [
-    vue({
-      template: { transformAssetUrls }
-    }),
-    // Asegúrate de que las rutas a los archivos SASS sean correctas
-    quasar({
-      sassVariables: 'src/quasar-variables.sass'
-    })
-  ]
-})</code></q-banner>
+                            <CodeBlock :code="code.viteConfig" class="q-mt-sm" />
                         </q-item-section>
                     </q-item>
                     <q-item>
@@ -98,27 +77,7 @@ export default defineConfig({
                         <q-item-section>
                             <q-item-label class="text-weight-bold">Modifica tu archivo de entrada (<code>main.js</code>)</q-item-label>
                             <q-item-label caption>Importa los estilos de Quasar y dile a tu instancia de Vue que use el framework.</q-item-label>
-                            <q-banner class="bg-grey-2 q-mt-sm"><code class="code-block" v-pre>// main.js
-import { createApp } from 'vue'
-import App from './App.vue'
-import { Quasar, Notify } from 'quasar' // Importa Quasar y los plugins que necesites
-
-// Importa los estilos de Quasar (iconos y css base)
-import '@quasar/extras/material-icons/material-icons.css'
-import 'quasar/src/css/index.sass'
-
-const myApp = createApp(App)
-
-myApp.use(Quasar, {
-  plugins: {
-    Notify // Ejemplo: añade el plugin de Notificaciones
-  }, 
-  config: {
-    notify: { /* Opciones por defecto para Notify */ }
-  }
-})
-
-myApp.mount('#app')</code></q-banner>
+                            <CodeBlock :code="code.mainJs" class="q-mt-sm" />
                         </q-item-section>
                     </q-item>
                     <q-item>
@@ -126,16 +85,7 @@ myApp.mount('#app')</code></q-banner>
                         <q-item-section>
                             <q-item-label class="text-weight-bold">Crea el archivo de variables (opcional)</q-item-label>
                             <q-item-label caption>Crea el archivo <code>src/quasar-variables.sass</code> para personalizar los colores y estilos de Quasar.</q-item-label>
-                            <q-banner class="bg-grey-2 q-mt-sm"><code class="code-block" v-pre>// src/quasar-variables.sass
-$primary   : #1976D2
-$secondary : #26A69A
-$accent    : #9C27B0
-
-$positive  : #21BA45
-$negative  : #C10015
-$info      : #31CCEC
-$warning   : #F2C037
-</code></q-banner>
+                            <CodeBlock :code="code.quasarVariables" class="q-mt-sm" />
                         </q-item-section>
                     </q-item>
                 </q-list>
@@ -160,12 +110,61 @@ $warning   : #F2C037
                         </q-item-section>
                     </q-item>
                 </q-list>
+                <q-card-section class="text-right">
+        <span class="text-caption text-grey-7">
+          Desarrollado por Santiago Carvajal y Juliana Sanabria
+        </span>
+      </q-card-section>
             </q-card-section>
         </q-card>
     </q-page>
 </template>
 
 <script setup>
+import { reactive } from 'vue';
+import CodeBlock from '../components/CodeBlock.vue';
+
+const code = reactive({
+  init: `<span class="token-keyword">npm</span> <span class="token-function">init</span> quasar`,
+  dev: `<span class="token-comment"># Reemplaza "mi-app-quasar" con el nombre que elegiste</span>
+<span class="token-keyword">cd</span> mi-app-quasar
+<span class="token-keyword">quasar</span> dev`,
+  deps: `<span class="token-comment"># Instala Quasar y su plugin para Vite</span>
+<span class="token-keyword">npm</span> <span class="token-function">install</span> quasar @quasar/extras
+<span class="token-comment"># Sass es el pre-procesador recomendado por Quasar</span>
+<span class="token-keyword">npm</span> <span class="token-function">install</span> -D sass vite-plugin-quasar`,
+  viteConfig: `<span class="token-comment">// vite.config.js</span>
+<span class="token-keyword">import</span> { defineConfig } <span class="token-keyword">from</span> <span class="token-string">'vite'</span>
+<span class="token-keyword">import</span> vue <span class="token-keyword">from</span> <span class="token-string">'@vitejs/plugin-vue'</span>
+<span class="token-keyword">import</span> { quasar, transformAssetUrls } <span class="token-keyword">from</span> <span class="token-string">'@quasar/vite-plugin'</span>
+
+<span class="token-keyword">export default</span> <span class="token-function">defineConfig</span>({
+  <span class="token-attr-name">plugins</span>: [
+    <span class="token-function">vue</span>({
+      <span class="token-attr-name">template</span>: { transformAssetUrls }
+    }),
+    <span class="token-function">quasar</span>({
+      <span class="token-attr-name">sassVariables</span>: <span class="token-string">'src/quasar-variables.sass'</span>
+    })
+  ]
+})`,
+  mainJs: `<span class="token-comment">// main.js</span>
+<span class="token-keyword">import</span> { createApp } <span class="token-keyword">from</span> <span class="token-string">'vue'</span>
+<span class="token-keyword">import</span> App <span class="token-keyword">from</span> <span class="token-string">'./App.vue'</span>
+<span class="token-keyword">import</span> { Quasar, Notify } <span class="token-keyword">from</span> <span class="token-string">'quasar'</span>
+
+<span class="token-comment">// Importa los estilos de Quasar</span>
+<span class="token-keyword">import</span> <span class="token-string">'@quasar/extras/material-icons/material-icons.css'</span>
+<span class="token-keyword">import</span> <span class="token-string">'quasar/src/css/index.sass'</span>
+
+<span class="token-keyword">const</span> myApp = <span class="token-function">createApp</span>(App)
+myApp.<span class="token-function">use</span>(Quasar, { <span class="token-attr-name">plugins</span>: { Notify } })
+myApp.<span class="token-function">mount</span>(<span class="token-string">'#app'</span>)`,
+  quasarVariables: `<span class="token-comment">// src/quasar-variables.sass</span>
+<span class="token-variable">$primary</span>   : #1976D2
+<span class="token-variable">$secondary</span> : #26A69A
+<span class="token-variable">$accent</span>    : #9C27B0`
+});
 </script>
 
 <style scoped>
@@ -175,25 +174,5 @@ $warning   : #F2C037
     border-radius: 14px;
     box-shadow: 0 4px 16px rgba(0,0,0,0.1);
     background: #fff;
-}
-.q-banner {
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    border-radius: 8px;
-    line-height: 1.7;
-    background: #f5f5f5;
-    color: #222;
-}
-code {
-    font-family: 'Fira Mono', 'Courier New', Courier, monospace;
-    background-color: #e3e3e3;
-    padding: 2px 6px;
-    border-radius: 4px;
-}
-.code-block {
-    white-space: pre-wrap;
-    word-break: break-word;
-    display: block;
-    background: transparent;
-    padding: 0;
 }
 </style>

@@ -1,4 +1,4 @@
-<template>
+<template >
   <q-page class="q-pa-md">
     <q-card class="my-card">
       <q-card-section>
@@ -120,14 +120,7 @@
 
       <q-card-section>
         <div class="text-h6 text-accent">Ejemplo moderno con Composition API</div>
-        <q-banner class="bg-grey-2 q-mt-sm">
-          <code>
-            <span>import { onMounted, onUpdated, ref } from 'vue'</span><br>
-            <span>const mensaje = ref('Hola ciclo de vida')</span><br>
-            <span>onMounted(() => { console.log('Componente montado') })</span><br>
-            <span>onUpdated(() => { console.log('Componente actualizado') })</span>
-          </code>
-        </q-banner>
+        <CodeBlock :code="code.lifecycle" class="q-mt-sm" />
       </q-card-section>
 
       <q-card-section>
@@ -136,12 +129,20 @@
           El ciclo de vida de Vue te permite controlar el comportamiento de tus componentes en cada etapa. Usar correctamente los hooks te ayuda a optimizar recursos, mejorar la experiencia de usuario y mantener tu código organizado. ¡Explora los hooks y experimenta con ejemplos reales para dominar Vue.js!
         </div>
       </q-card-section>
+      <q-card-section class="text-right">
+        <span class="text-caption text-grey-7">
+          Desarrollado por Santiago Carvajal y Juliana Sanabria
+        </span>
+      </q-card-section>
     </q-card>
   </q-page>
   
 </template>
 
 <script setup>
+import { reactive } from 'vue';
+import CodeBlock from '../components/CodeBlock.vue';
+
 const optionsApiHooks = [
   { name: 'beforeCreate', desc: 'No hay data ni methods.' },
   { name: 'created', desc: 'Ya puedes acceder a data y methods.' },
@@ -185,6 +186,19 @@ const tips = [
   '❌ Evita modificar datos dentro de <b>updated</b>, puede causar bucles infinitos.',
   '❌ <b>beforeCreate</b> casi nunca se necesita.'
 ];
+
+const code = reactive({
+  lifecycle: `<span class="token-comment">// Ejemplo de ciclo de vida en Composition API</span>
+<span class="token-keyword">import</span> { onMounted, onUnmounted } <span class="token-keyword">from</span> <span class="token-string">'vue'</span>
+
+<span class="token-function">onMounted</span>(() => {
+  console.<span class="token-function">log</span>(<span class="token-string">'Componente montado'</span>)
+})
+
+<span class="token-function">onUnmounted</span>(() => {
+  console.<span class="token-function">log</span>(<span class="token-string">'Componente desmontado'</span>)
+})`
+})
 </script>
 
 <style scoped>
@@ -192,9 +206,5 @@ const tips = [
   max-width: 900px;
   margin: 0 auto;
   margin-top: 30px;
-}
-.q-banner {
-  font-size: 15px;
-  margin-bottom: 10px;
 }
 </style>
