@@ -95,7 +95,7 @@
 
       <q-card-section>
         <div class="text-h6 text-accent">Diagrama del ciclo de vida (Vue 3)</div>
-        <q-img src="https://vuejs.org/assets/lifecycle.16e4c08e.png" alt="Diagrama ciclo de vida Vue 3" style="max-width: 500px;" />
+        <q-img src="https://lenguajejs.com/vuejs/componentes/ciclo-vida/vue-lifecycle.png" alt="Diagrama ciclo de vida Vue 3" style="max-width: 500px;" />
       </q-card-section>
 
       <q-card-section>

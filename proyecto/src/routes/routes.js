@@ -29,7 +29,8 @@ const routes = [
    {path: "/PropsView", component:PropsView},
    {path: "/TemplateQuasarView", component:TemplateQuasarView},
    {path: "/InstalacionQuasarView", component:InstalacionQuasarView},
-   {path: "/VueRouterView", component:VueRouterView},  {path: "/PiniaView", component:PiniaView},
+   {path: "/VueRouterView", component:VueRouterView}, 
+    {path: "/PiniaView", component:PiniaView},
    {path: "/PersistenciaView", component:PersistenciaView}
 ] 
 export const router = createRouter({

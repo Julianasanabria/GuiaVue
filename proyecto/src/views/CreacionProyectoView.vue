@@ -61,7 +61,47 @@
                 <p class="q-mt-sm">
                   La opción moderna y recomendada por el equipo de Vue. Vite (que en francés significa "rápido") utiliza los módulos ES nativos del navegador para ofrecer un servidor de desarrollo <b>ultrarrápido</b>. Los cambios en tu código se reflejan en el navegador casi instantáneamente.
                 </p>
-                <CodeBlock :code="code.vite" class="q-mt-sm" />
+                <div class="text-h6 q-mt-lg">Paso a Paso Detallado</div>
+                <q-list bordered separator class="rounded-borders q-mt-sm">
+                  <q-item>
+                    <q-item-section avatar><q-icon name="create_new_folder" color="primary" /></q-item-section>
+                    <q-item-section>
+                      <q-item-label class="text-weight-bold">1. Crea y navega a la carpeta de tu proyecto</q-item-label>
+                      <q-item-label caption>Abre tu terminal y crea un directorio para almacenar tu proyecto, luego entra en él.</q-item-label>
+                      <CodeBlock :code="code.folder" class="q-mt-sm" />
+                    </q-item-section>
+                  </q-item>
+                  <q-item>
+                    <q-item-section avatar><q-icon name="terminal" color="primary" /></q-item-section>
+                    <q-item-section>
+                      <q-item-label class="text-weight-bold">2. Ejecuta el asistente de creación de Vite</q-item-label>
+                      <q-item-label caption>Este comando iniciará un asistente interactivo en tu terminal.</q-item-label>
+                      <CodeBlock :code="code.vite" class="q-mt-sm" />
+                    </q-item-section>
+                  </q-item>
+                  <q-item>
+                    <q-item-section avatar><q-icon name="checklist" color="primary" /></q-item-section>
+                    <q-item-section>
+                      <q-item-label class="text-weight-bold">3. Sigue las instrucciones del asistente</q-item-label>
+                      <q-item-label caption>Vite te guiará para que configures tu proyecto. Deberás:</q-item-label>
+                      <CodeBlock :code="code.viteSteps" class="q-mt-sm" />
+                    </q-item-section>
+                  </q-item>
+                  <q-item>
+                    <q-item-section avatar><q-icon name="download" color="primary" /></q-item-section>
+                    <q-item-section>
+                      <q-item-label class="text-weight-bold">4. Instala las dependencias y arranca el servidor</q-item-label>
+                      <q-item-label caption>Una vez creado el proyecto, instala los paquetes necesarios con npm y lanza el servidor de desarrollo.</q-item-label>
+                      <CodeBlock :code="code.installAndRun" class="q-mt-sm" />
+                    </q-item-section>
+                  </q-item>
+                </q-list>
+                <q-img
+                  src="https://miro.medium.com/v2/resize:fit:1400/1*WULv4MqSBtUoMEEBDZkOhA.png"
+                  alt="Captura de pantalla de la terminal mostrando el proyecto Vite creado y el servidor de desarrollo iniciado."
+                  class="q-mt-md rounded-borders"
+                  style="max-width: 600px; margin: 0 auto; display: block;"
+                />
                 <div class="row q-mt-md q-col-gutter-sm">
                   <div class="col-12 col-sm-6"><b>Ventajas:</b> Arranque casi instantáneo, HMR (Hot Module Replacement) rapidísimo, configuración sencilla, optimizado para tecnologías modernas.</div>
                   <div class="col-12 col-sm-6"><b>Desventajas:</b> El ecosistema de plugins es más nuevo que el de Webpack.</div>
@@ -193,8 +233,23 @@ const code = reactive({
 
 <span class="token-comment"># 2. Crear el proyecto (te guiará con preguntas)</span>
 <span class="token-keyword">vue</span> <span class="token-function">create</span> mi-proyecto-vue`,
-  vite: `<span class="token-comment"># 1. Ejecuta el comando de creación (sin instalación global)</span>
-<span class="token-keyword">npm</span> <span class="token-function">create</span> vite@latest mi-proyecto-vite -- --template vue`
+  folder: `<span class="token-comment"># Crea una carpeta llamada 'proyectos-vue' y entra en ella</span>
+<span class="token-keyword">mkdir</span> proyectos-vue
+<span class="token-keyword">cd</span> proyectos-vue`,
+  vite: `<span class="token-comment"># El comando te preguntará el nombre del proyecto y otras opciones</span>
+<span class="token-keyword">npm</span> <span class="token-function">create</span> vite@latest`,
+  viteSteps: `<span class="token-comment"># 1. Escribe el nombre de tu proyecto (ej: mi-proyecto-vite)</span>
+<span class="token-output">✔ Project name: … mi-proyecto-vite</span>
+<span class="token-comment"># 2. Selecciona "Vue" usando las flechas y presiona Enter</span>
+<span class="token-output">✔ Select a framework: › Vue</span>
+<span class="token-comment"># 3. Elige una variante (ej: Vue para JavaScript puro)</span>
+<span class="token-output">✔ Select a variant: › Vue</span>`,
+  installAndRun: `<span class="token-comment"># Entra a la carpeta que acabas de crear</span>
+<span class="token-keyword">cd</span> mi-proyecto-vite
+<span class="token-comment"># Instala las dependencias listadas en package.json</span>
+<span class="token-keyword">npm</span> <span class="token-function">install</span>
+<span class="token-comment"># Inicia el servidor de desarrollo</span>
+<span class="token-keyword">npm</span> <span class="token-function">run</span> dev`
 });
 </script>
 

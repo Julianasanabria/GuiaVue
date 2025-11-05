@@ -2,192 +2,216 @@
   <q-page class="q-pa-md">
     <q-card class="my-card">
       <q-card-section>
-        <div class="text-h4 text-primary text-center">Ciclo de Vida en Vue.js</div>
+        <div class="text-h4 text-primary text-center">¿Qué es Vue.js?</div>
         <div class="text-subtitle2 q-mt-xs text-center text-grey-7">
-          ¿Qué es el ciclo de vida?
+          Framework progresivo para construir interfaces de usuario
         </div>
         <q-separator class="q-my-sm" />
-        <div>
-          En Vue, cada componente pasa por una serie de etapas desde que se crea,
-          se monta en el DOM, se actualiza cuando cambian sus datos, y finalmente
-          se destruye.<br />
-          A estos pasos se les llama <b>ciclo de vida</b> y Vue nos da
-          <b>hooks</b> (ganchos) para ejecutar código en cada momento.
+        <p>
+          <b>Vue.js</b> es un framework JavaScript de código abierto para construir interfaces de usuario y aplicaciones de una sola página (SPA). 
+          Fue creado para ser <b>incrementalmente adoptable</b>: puedes usar solo la parte que necesitas, desde una librería ligera hasta una plataforma completa con enrutamiento, gestión de estado y herramientas de compilación.
+        </p>
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h5 text-secondary q-mb-md">Historia y creación</div>
+        <q-list dense>
+          <q-item>
+            <q-item-section>
+              <b>Creador:</b> <span class="text-grey-9">Evan You</span>
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <b>Primera versión pública:</b> <span class="text-grey-9">febrero de 2014</span>
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <b>Vue 3 lanzado:</b> <span class="text-grey-9">septiembre de 2020</span> (después de varios años de desarrollo y versiones alfa/beta)
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section>
+              <b>Inspiración:</b> <span class="text-grey-9">Combina ideas de Angular (directivas, templates) y React (componentes, flujo unidireccional)</span>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h5 text-secondary q-mb-md">Características principales de Vue 3</div>
+        <q-list bordered separator class="custom-list">
+          <q-item v-for="(feature, index) in features" :key="index">
+            <q-item-section>
+              <div class="text-bold">{{ feature.title }}</div>
+              <div>{{ feature.description }}</div>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h5 text-secondary q-mb-md">APIs en Vue 3</div>
+        <div class="row q-gutter-md">
+          <div class="col-12 col-md-6">
+            <q-card flat bordered class="bg-grey-1">
+              <q-card-section>
+                <div class="text-h6 text-primary">Options API</div>
+                <p class="q-mt-sm">
+                  Estilo clásico de Vue. Organiza la lógica en opciones como <code>data</code>, <code>methods</code>, <code>computed</code>, etc.
+                </p>
+                <q-code class="text-caption">
+import { createApp } from 'vue'<br>
+createApp({<br>
+&nbsp;&nbsp;data() { return { count: 0 } },<br>
+&nbsp;&nbsp;methods: { inc() { this.count++ } }<br>
+}).mount('#app')
+                </q-code>
+              </q-card-section>
+            </q-card>
+          </div>
+          <div class="col-12 col-md-6">
+            <q-card flat bordered class="bg-grey-1">
+              <q-card-section>
+                <div class="text-h6 text-primary">Composition API</div>
+                <p class="q-mt-sm">
+                  Nueva forma (introducida en Vue 3) para organizar lógica basada en funciones. Ideal para componentes complejos y reutilización de lógica.
+                </p>
+                <q-code class="text-caption">
+import { createApp, ref } from 'vue'<br>
+createApp({<br>
+&nbsp;&nbsp;setup() {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const count = ref(0)<br>
+&nbsp;&nbsp;&nbsp;&nbsp;const inc = () => count.value++<br>
+&nbsp;&nbsp;&nbsp;&nbsp;return { count, inc }<br>
+&nbsp;&nbsp;}<br>
+}).mount('#app')
+                </q-code>
+              </q-card-section>
+            </q-card>
+          </div>
         </div>
       </q-card-section>
 
       <q-card-section>
-        <div class="text-h5 text-secondary q-mb-md">Etapas principales</div>
-        <q-timeline color="primary">
-          <q-timeline-entry
-            title="Creación (Creation)"
-            subtitle="Preparación de datos"
-            icon="settings"
-          >
-            <div>
-              El componente prepara sus datos (<code>data</code>, <code>props</code>, <code>methods</code>).<br />
-              <b>Aún no aparece en pantalla (DOM).</b>
-              <ul>
-                <li><b>beforeCreate</b> → No se puede acceder a data ni methods.</li>
-                <li><b>created</b> → Ya existen data y methods, pero aún no hay acceso al DOM.</li>
-              </ul>
-            </div>
-          </q-timeline-entry>
-          <q-timeline-entry
-            title="Montaje (Mounting)"
-            subtitle="Inserción en el DOM"
-            icon="publish"
-          >
-            <div>
-              El componente se inserta en el DOM real.<br />
-              Aquí ya puedes manipular elementos con <code>refs</code>.
-              <ul>
-                <li><b>beforeMount</b> → Antes de montar el DOM.</li>
-                <li><b>mounted</b> → El componente ya está en el DOM.</li>
-              </ul>
-            </div>
-          </q-timeline-entry>
-          <q-timeline-entry
-            title="Actualización (Updating)"
-            subtitle="Cambios en datos"
-            icon="autorenew"
-          >
-            <div>
-              Se ejecuta cada vez que cambian datos (<code>data</code>, <code>props</code>).
-              <ul>
-                <li><b>beforeUpdate</b> → Antes de que Vue actualice el DOM.</li>
-                <li><b>updated</b> → Después de que el DOM se actualizó.</li>
-              </ul>
-            </div>
-          </q-timeline-entry>
-          <q-timeline-entry
-            title="Destrucción (Unmounting)"
-            subtitle="Eliminación del componente"
-            icon="delete"
-          >
-            <div>
-              El componente se elimina del DOM.<br />
-              Aquí limpias timers, sockets o eventos.
-              <ul>
-                <li><b>beforeUnmount</b> → Justo antes de destruir el componente.</li>
-                <li><b>unmounted</b> → El componente ya fue eliminado.</li>
-              </ul>
-              <div class="text-caption">
-                En Vue 2: <code>beforeDestroy</code> y <code>destroyed</code>.
-              </div>
-            </div>
-          </q-timeline-entry>
-        </q-timeline>
-      </q-card-section>
-
-      <q-card-section>
-        <div class="text-h6 text-accent q-mb-sm">Hooks en Options API</div>
-        <q-list bordered class="custom-list">
-          <q-item v-for="hook in optionsApiHooks" :key="hook.name" clickable>
+        <div class="text-h5 text-secondary q-mb-md">¿Cómo se usa Vue 3?</div>
+        <p>
+          Puedes integrar Vue 3 de varias formas:
+        </p>
+        <q-list dense>
+          <q-item>
+            <q-item-section side top>
+              <q-icon name="code" color="primary" />
+            </q-item-section>
             <q-item-section>
-              <b>{{ hook.name }}</b>: {{ hook.desc }}
+              <b>CDN (rápido para pruebas):</b> Incluye el script desde un CDN y usa directamente en HTML.
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section side top>
+              <q-icon name="build" color="primary" />
+            </q-item-section>
+            <q-item-section>
+              <b>Vue CLI (legacy):</b> Herramienta oficial para scaffolding (aunque ya está en modo mantenimiento).
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section side top>
+              <q-icon name="terminal" color="primary" />
+            </q-item-section>
+            <q-item-section>
+              <b>Vite (recomendado):</b> Herramienta de construcción ultrarrápida creada por Evan You. Ideal para proyectos modernos con Vue 3.
+            </q-item-section>
+          </q-item>
+          <q-item>
+            <q-item-section side top>
+              <q-icon name="extension" color="primary" />
+            </q-item-section>
+            <q-item-section>
+              <b>Frameworks UI:</b> Se integra perfectamente con Quasar, Vuetify, Element Plus, etc.
             </q-item-section>
           </q-item>
         </q-list>
       </q-card-section>
 
       <q-card-section>
-        <div class="text-h6 text-accent q-mb-sm">Hooks en Composition API (Vue 3)</div>
+        <div class="text-h5 text-secondary q-mb-md">Ventajas de Vue 3</div>
         <q-list bordered class="custom-list">
-          <q-item v-for="hook in compositionApiHooks" :key="hook.name" clickable>
+          <q-item v-for="(advantage, i) in advantages" :key="i">
             <q-item-section>
-              <b>{{ hook.name }}</b>: {{ hook.desc }}
+              <q-icon name="check_circle" color="green" class="q-mr-sm" />
+              <span>{{ advantage }}</span>
             </q-item-section>
           </q-item>
         </q-list>
-        <div class="q-mt-sm text-caption">
-          <b>Nota:</b> no existen <code>beforeCreate</code> ni <code>created</code>, porque la lógica inicial se ejecuta directamente en <code>setup()</code>.
+      </q-card-section>
+
+      <q-card-section>
+        <div class="text-h5 text-secondary q-mb-md">Ecosistema de Vue</div>
+        <div class="row q-gutter-sm">
+          <div v-for="tool in ecosystem" :key="tool.name" class="col-6 col-sm-4 col-md-3">
+            <q-card flat bordered class="text-center q-pa-sm bg-grey-2">
+              <div class="text-bold">{{ tool.name }}</div>
+              <div class="text-caption text-grey-7">{{ tool.desc }}</div>
+            </q-card>
+          </div>
         </div>
       </q-card-section>
 
-      <q-card-section>
-        <div class="text-h6 text-accent q-mb-sm">Comparación con la vida real</div>
-        <q-table
-          :rows="lifeComparison"
-          :columns="lifeColumns"
-          dense
-          flat
-          hide-bottom
-          class="custom-table"
-        />
-      </q-card-section>
-
-      <q-card-section>
-        <div class="text-h6 text-accent q-mb-sm">Diagrama del ciclo de vida (Vue 3)</div>
-        <q-img
-          src="https://learnvue.co/cdn/img/articles/vue-lifecycle-hooks-guide/1.png"
-          alt="Diagrama ciclo de vida Vue 3"
-          style="max-width: 500px; border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,0.2);"
-        />
-      </q-card-section>
-
-      <q-card-section>
-        <div class="text-h6 text-accent q-mb-sm">Buenas prácticas</div>
-        <q-list bordered class="custom-list">
-          <q-item v-for="(tip, i) in tips" :key="i">
-            <q-item-section>
-              <span v-html="tip"></span>
-            </q-item-section>
-          </q-item>
-        </q-list>
-        <q-card-section class="text-right">
+      <q-card-section class="text-right">
         <span class="text-caption text-grey-7">
           Desarrollado por Santiago Carvajal y Juliana Sanabria
         </span>
-      </q-card-section>
       </q-card-section>
     </q-card>
   </q-page>
 </template>
 
 <script setup>
-const optionsApiHooks = [
-  { name: 'beforeCreate', desc: 'No hay data ni methods.' },
-  { name: 'created', desc: 'Ya puedes acceder a data y methods.' },
-  { name: 'beforeMount', desc: 'Antes de mostrar el DOM.' },
-  { name: 'mounted', desc: 'El componente ya está en el DOM.' },
-  { name: 'beforeUpdate', desc: 'Antes de actualizar el DOM.' },
-  { name: 'updated', desc: 'El DOM ya se actualizó.' },
-  { name: 'beforeUnmount', desc: 'Antes de destruir el componente.' },
-  { name: 'unmounted', desc: 'El componente ya fue destruido.' }
+const features = [
+  {
+    title: 'Reactividad basada en Proxies',
+    description: 'Vue 3 usa el objeto Proxy de JavaScript para rastrear reactividad de forma más eficiente y completa (incluye arrays, propiedades dinámicas, etc.).'
+  },
+  {
+    title: 'Composition API',
+    description: 'Permite agrupar lógica relacionada, mejorar la reutilización y manejar mejor la complejidad en componentes grandes.'
+  },
+  {
+    title: 'Rendimiento mejorado',
+    description: 'Menor tamaño del bundle (~10KB comprimido), mejor rendimiento en actualizaciones y renderizado.'
+  },
+  {
+    title: 'Soporte para Fragments y Teleport',
+    description: 'Puedes devolver múltiples elementos raíz (Fragments) o renderizar componentes en otro lugar del DOM (Teleport).'
+  },
+  {
+    title: 'TypeScript nativo',
+    description: 'Vue 3 está escrito en TypeScript y ofrece excelente soporte para tipado estático.'
+  },
+  {
+    title: 'Tree-shaking',
+    description: 'Solo se incluye en el bundle el código que realmente usas, reduciendo el tamaño final.'
+  }
 ];
 
-const compositionApiHooks = [
-  { name: 'onBeforeMount', desc: 'Antes de montar el DOM.' },
-  { name: 'onMounted', desc: 'El componente ya está en el DOM.' },
-  { name: 'onBeforeUpdate', desc: 'Antes de actualizar el DOM.' },
-  { name: 'onUpdated', desc: 'El DOM ya se actualizó.' },
-  { name: 'onBeforeUnmount', desc: 'Antes de destruir el componente.' },
-  { name: 'onUnmounted', desc: 'El componente ya fue destruido.' }
+const advantages = [
+  'Curva de aprendizaje suave para principiantes',
+  'Excelente documentación oficial (en múltiples idiomas)',
+  'Flexibilidad: puede usarse como librería o framework completo',
+  'Gran rendimiento y optimización automática',
+  'Comunidad activa y ecosistema maduro',
+  'Compatibilidad con Vue 2 mediante el paquete de migración'
 ];
 
-const lifeColumns = [
-  { name: 'hook', label: 'Hook Vue', field: 'hook', align: 'left' },
-  { name: 'real', label: 'Vida Real', field: 'real', align: 'left' }
-];
-
-const lifeComparison = [
-  { hook: 'beforeCreate', real: 'Bebé en el vientre (no tiene identidad)' },
-  { hook: 'created', real: 'Bebé nace (ya tiene nombre, pero aún no está en casa)' },
-  { hook: 'beforeMount', real: 'Preparas la cuna antes de que llegue' },
-  { hook: 'mounted', real: 'El bebé ya está en casa' },
-  { hook: 'beforeUpdate', real: 'Niño a punto de cambiarse de ropa' },
-  { hook: 'updated', real: 'Niño con ropa nueva' },
-  { hook: 'beforeUnmount', real: 'Empacando para mudarse' },
-  { hook: 'unmounted', real: 'Persona ya se mudó, la habitación está vacía' }
-];
-
-const tips = [
-  '✔ Usa <b>created</b> para inicializar datos o llamar a APIs.',
-  '✔ Usa <b>mounted</b> para acceder a elementos del DOM o integrar librerías externas.',
-  '✔ Usa <b>beforeUnmount</b> para limpiar timers, sockets o eventos.',
-  '❌ Evita modificar datos dentro de <b>updated</b>, puede causar bucles infinitos.',
-  '❌ <b>beforeCreate</b> casi nunca se necesita.'
+const ecosystem = [
+  { name: 'Vue Router', desc: 'Enrutamiento oficial' },
+  { name: 'Pinia', desc: 'Gestión de estado (reemplazo moderno de Vuex)' },
+  { name: 'Vite', desc: 'Herramienta de construcción' },
+  { name: 'Quasar', desc: 'Framework UI completo con SSR, PWA, etc.' },
+  { name: 'Vuetify', desc: 'UI basado en Material Design' },
+  { name: 'Vue DevTools', desc: 'Extensión para depuración en navegador' }
 ];
 </script>
 
@@ -201,7 +225,6 @@ const tips = [
   padding: 1rem;
 }
 
-/* Listas */
 .custom-list {
   border-radius: 8px;
   background: #fafafa;
@@ -213,25 +236,10 @@ const tips = [
   background: #f0f0f0;
 }
 
-/* Tabla */
-.custom-table {
-  border-radius: 8px;
-  overflow: hidden;
-  background: #fafafa;
-}
-.custom-table thead {
-  background: #e3f2fd;
-  font-weight: bold;
-}
-.custom-table td {
-  font-size: 15px;
-}
-
-/* Textos */
 .text-subtitle2 {
   font-size: 18px;
 }
-.text-h4 {
+.text-h4, .text-h5 {
   font-weight: 700;
 }
 </style>

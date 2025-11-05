@@ -1,20 +1,20 @@
 <template>
   <div class="full-width">
     <q-layout view="hHh Lpr lff" class="shadow-2 rounded-borders full-height">
-      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-black'">
+      <q-header elevated :class="$q.dark.isActive ? 'bg-secondary' : 'bg-yellow-8'">
         <q-toolbar>
           <q-btn flat @click="drawer = !drawer" round dense icon="menu" />
           <q-toolbar-title>Conociendo un poco de Vue 3</q-toolbar-title>
         </q-toolbar>
       </q-header>
 
-      <q-drawer
+      <q-drawer 
         v-model="drawer"
         show-if-above
         :width="280"
         :breakpoint="500"
         bordered
-        :class="$q.dark.isActive ? 'bg-grey-9' : 'bg-grey-3'"
+        :class="$q.dark.isActive ? 'bg-purple-3' : 'bg-yellow-2'"
       >
         <q-scroll-area class="fit">
           <q-list>
@@ -52,42 +52,42 @@ const menuList = [
   },
 {
   label: 'Requisitos',
-  separator: false,
+  separator: true,
   to: '/RequisitosView'  
 },
   {
     label: 'Creacion del proyecto',
-    separator: false,
+    separator: true,
     to: '/CreacionProyectoView'
   },
   {
     label: 'Interpolacion',
-    separator: false,
+    separator: true,
     to: '/InterpolacionView'
   },
   {
     label: 'Directivas de vue',
-    separator: false,
+    separator: true,
     to: '/DirectivasView'
   },
   {
     label: 'Options Api',
-    separator: false,
+    separator: true,
     to: '/OptionsApiView'
   },
   {
     label: 'Composition Api',
-    separator: false,
+    separator: true,
     to: '/CompositionApiView'
   },
   {
     label: 'Ciclo de vida de Vue',
-    separator: false,
+    separator: true,
     to: '/CicloVidaView'
   },
   {
     label: 'Componentes importación',
-    separator: false,
+    separator: true,
     to: '/ComponentesView'
   },
   {
@@ -97,7 +97,7 @@ const menuList = [
   },
   {
     label: 'Creación de un proyecto template Quasar',
-    separator: false,
+    separator: true,
     to: '/TemplateQuasarView'
   },
   {
@@ -112,7 +112,7 @@ const menuList = [
   },
   {
     label: 'Pinia',
-    separator: false,
+    separator: true,
     to: '/PiniaView'
   },
   {
